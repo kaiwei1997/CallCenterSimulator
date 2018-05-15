@@ -33,8 +33,8 @@ public class CallGenerator
     public void run() {
         long ex = System.currentTimeMillis() + (execDuration * 60 * 1000);
         while (System.currentTimeMillis() < ex) {
-            int duration = random.nextInt(17);
-            if (duration > 1) {
+            int duration = random.nextInt(16);
+            if (duration > 2) {
                 log("Creating a call with a duration of " + duration + " seconds");
                 CallQueue.queueCall(duration);
                 sleep();
