@@ -19,33 +19,37 @@ public class CallGenerator
     private final SimpleDateFormat formatter;
 
     private final Random random;
+    
+    private final long execDuration;
 
-    private boolean running;
 
-    public CallGenerator() {
+    public CallGenerator(long l) {
         random = new Random();
-        formatter = new SimpleDateFormat("hh:mm:ss");
+        formatter = new SimpleDateFormat("HH:mm:ss");
+        execDuration = l;
     }
 
     @Override
     public void run() {
-        while (running) {
+        long ex = System.currentTimeMillis() + (execDuration * 60 * 1000);
+        while (System.currentTimeMillis() < ex) {
             int duration = random.nextInt(17);
             if (duration > 1) {
-                log("creating a call with a duration of " + duration + " seconds");
+                log("Creating a call with a duration of " + duration + " seconds");
                 CallQueue.queueCall(duration);
                 sleep();
             }
         }
+        stop();
+        
     }
 
     public void start() {
-            running = true;
-            new Thread(this).start();
+        new Thread(this).start();
     }
 
     public void stop() {
-        running = false;
+        log("Stop creating call");
     }
 
     public void log(String s) {
