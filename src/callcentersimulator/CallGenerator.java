@@ -23,10 +23,10 @@ public class CallGenerator
     private final long execDuration;
 
 
-    public CallGenerator(long l) {
+    public CallGenerator(long duration) {
         random = new Random();
         formatter = new SimpleDateFormat("HH:mm:ss");
-        execDuration = l;
+        execDuration = duration;
     }
 
     @Override
