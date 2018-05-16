@@ -14,48 +14,56 @@ import java.util.Date;
  * @author JoshTan
  */
 public class CallQueue {
-    
+
     private static CallQueue instance;
-    
+
     private int counter;
-    
-    private SimpleDateFormat formatter;
-    
-    private LinkedBlockingQueue<Call> queue;
-    
-    public static void queueCall (int duration)
-    {
-        try{
-            Call call = new Call(getInstance().counter++,duration);
-            log("Queueing call "+call.getNumber()+" with a duration of " + call.getDuration() + " seconds");
+
+    private final SimpleDateFormat formatter;
+
+    private static LinkedBlockingQueue<Call> queue;
+
+    public static void queueCall(int duration) {
+        try {
+            Call call = new Call(getInstance().counter++, duration);
+            log("Queueing call " + call.getNumber() + " with a duration of " + call.getDuration() + " seconds");
             getInstance().queue.put(call);
-        }catch(InterruptedException e){
+            PrintCallQ();
+        } catch (InterruptedException e) {
             log("There was an error queueing the call");
         }
     }
     
-    public static Call retrieveCall(){
+    public static void PrintCallQ(){
+        System.out.println("Call In Queue");
+        System.out.println("-------------");
+        System.out.println("Call ID    Duration");
+        System.out.println("-------    --------");
+        queue.forEach(f -> System.out.println(f.getNumber() + "          "+f.getDuration()));
+    }
+
+    public static Call retrieveCall() {
         Call call = getInstance().queue.poll();
-        if(call != null){
-            log("Retrieving call "+call.getNumber());
+        if (call != null) {
+            log("Retrieving call " + call.getNumber());
         }
         return call;
     }
-    
-    public static CallQueue getInstance(){
-        if (instance == null){
+
+    public static CallQueue getInstance() {
+        if (instance == null) {
             instance = new CallQueue();
         }
         return instance;
     }
-    
-    private static void log(String s){
+
+    private static void log(String s) {
         System.out.println("[" + getInstance().formatter.format(new Date()) + "][CallQueue] " + s);
     }
-    
-    private CallQueue(){
+
+    private CallQueue() {
         this.queue = new LinkedBlockingQueue<Call>();
-        this.counter=1;
+        this.counter = 1;
         this.formatter = new SimpleDateFormat("HH:mm:ss");
     }
 }
