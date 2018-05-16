@@ -14,9 +14,9 @@ import java.io.Serializable;
 public class Call
         implements Serializable 
 {
-    private int duration;
+    private final int duration;
     
-    private int number;
+    private final int number;
     
     public Call(int number, int duration){
         this.number = number;
