@@ -18,27 +18,21 @@ public class CallCenterSimulator {
      */
     public static void main(String... args) {
 
-        Scanner reader = new Scanner(System.in);
-
         int serviceAgentQty;
+        
         int minutes;
-
-        long runExpiration;
-
-        System.out.print("Enter the number of service agent: ");
-        serviceAgentQty = reader.nextInt();
-        System.out.print("Please enter the time for simulator run (In minutes): ");
-        minutes = reader.nextInt();
-        runExpiration = System.currentTimeMillis() + (minutes * 60 * 1000);
-
-        reader.close();
+        
+        try (Scanner reader = new Scanner(System.in)) {
+            System.out.print("Enter the number of service agent: ");
+            serviceAgentQty = reader.nextInt();
+            System.out.print("Please enter the time for simulator run (In minutes): ");
+            minutes = reader.nextInt();
+        }
 
         for (int i = 1; i <= serviceAgentQty; i++) {
             new ServiceAgent(i).start();
         }
 
-        System.out.println(runExpiration);
-        new CallGenerator().start();
-
+        new CallGenerator(minutes).start();
     }
 }
