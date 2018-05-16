@@ -34,6 +34,17 @@ public class CallQueue {
         }
     }
     
+    public static void enQueueCall(int id,int duration) {
+        try {
+            Call call = new Call(id, duration);
+            log("Queueing call " + call.getNumber() + " with a duration of " + call.getDuration() + " seconds");
+            getInstance().queue.put(call);
+            PrintCallQ();
+        } catch (InterruptedException e) {
+            log("There was an error queueing the call");
+        }
+    }
+    
     public static void PrintCallQ(){
         System.out.println("Call In Queue");
         System.out.println("-------------");
@@ -41,6 +52,7 @@ public class CallQueue {
         System.out.println("-------    --------");
         queue.forEach(f -> System.out.println(f.getNumber() + "          "+f.getDuration()));
     }
+    
 
     public static Call retrieveCall() {
         Call call = getInstance().queue.poll();
