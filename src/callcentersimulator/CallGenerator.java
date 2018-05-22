@@ -8,45 +8,49 @@ package callcentersimulator;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  *
  * @author JoshTan
  */
-public class CallGenerator
-        implements Runnable {
+public class CallGenerator {
 
     private final SimpleDateFormat formatter;
 
     private final Random random;
-    
+
     private final long execDuration;
     
-    private ServiceAgent s;
+    private final long ex;
 
+    private ServiceAgent sa;
 
     public CallGenerator(long duration) {
         random = new Random();
         formatter = new SimpleDateFormat("HH:mm:ss");
         execDuration = duration;
+        ex=System.currentTimeMillis()+(execDuration*30*1000);
     }
 
-    @Override
-    public void run() {
-        long ex = System.currentTimeMillis() + (execDuration * 60 * 1000);
+    public void timer() {
+        Timer timer = new Timer("CallGenerator");
         while (System.currentTimeMillis() < ex) {
-            int duration = random.nextInt(16);
-            if (duration > 2) {
-                log("Creating a call with a duration of " + duration + " seconds");
-                CallQueue.queueCall(duration);
-                sleep();
-            }
+            timer.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                    int duration = random.nextInt(16);
+                    if (duration > 2) {
+                        log("Creating a call with a duration of " + duration + " seconds");
+                        CallQueue.queueCall(duration);
+                        sleep();
+                    }
+                }
+            },0,1);
         }
+        timer.cancel();
         stop();
-    }
-
-    public void start() {
-        new Thread(this).start();
     }
 
     public void stop() {
@@ -59,7 +63,9 @@ public class CallGenerator
 
     private void sleep() {
         try {
-            Thread.sleep(3000);
+            int sleep = random.nextInt(3) + 3;
+            Thread.sleep(sleep * 1000);
+            log("Pause generate call " + sleep + " second(s)");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
