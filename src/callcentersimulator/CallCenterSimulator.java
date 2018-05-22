@@ -22,6 +22,8 @@ public class CallCenterSimulator {
         
         int minutes;
         
+        ServiceAgent sa;
+        
         try (Scanner reader = new Scanner(System.in)) {
             System.out.print("Please enter the number of service agent: ");
             serviceAgentQty = reader.nextInt();
@@ -30,9 +32,10 @@ public class CallCenterSimulator {
         }
 
         for (int i = 1; i <= serviceAgentQty; i++) {
-            new ServiceAgent(i).start();
+            sa = new ServiceAgent(i);
+            sa.start();
         }
 
-        new CallGenerator(minutes).start();
+        new CallGenerator(minutes).timer();
     }
 }
