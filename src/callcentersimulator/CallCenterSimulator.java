@@ -36,6 +36,6 @@ public class CallCenterSimulator {
             sa.start();
         }
 
-        new CallGenerator(minutes).timer();
+        new CallGenerator(minutes).start();
     }
 }
