@@ -15,45 +15,47 @@ import java.util.TimerTask;
  *
  * @author JoshTan
  */
-public class CallGenerator {
+public class CallGenerator implements Runnable {
 
     private final SimpleDateFormat formatter;
 
     private final Random random;
 
     private final long execDuration;
-    
+
     private final long ex;
 
     private ServiceAgent sa;
+
+    private boolean running = true;
 
     public CallGenerator(long duration) {
         random = new Random();
         formatter = new SimpleDateFormat("HH:mm:ss");
         execDuration = duration;
-        ex=System.currentTimeMillis()+(execDuration*30*1000);
+        ex = System.currentTimeMillis() + (execDuration * 30 * 1000);
     }
 
-    public void timer() {
-        Timer timer = new Timer("CallGenerator");
+    @Override
+    public void run() {
         while (System.currentTimeMillis() < ex) {
-            timer.scheduleAtFixedRate(new TimerTask() {
-                @Override
-                public void run() {
-                    int duration = random.nextInt(16);
-                    if (duration > 2) {
-                        log("Creating a call with a duration of " + duration + " seconds");
-                        CallQueue.queueCall(duration);
-                        sleep();
-                    }
+                int duration = random.nextInt(16);
+                if (duration > 2) {
+                    log("Creating a call with a duration of " + duration + " seconds");
+                    CallQueue.queueCall(duration);
+                    sleep();
                 }
-            },0,1);
         }
-        timer.cancel();
         stop();
     }
 
+    public void start() {
+        running = true;
+        new Thread(this).start();
+    }
+
     public void stop() {
+        running = false;
         log("Stop creating call");
     }
 
