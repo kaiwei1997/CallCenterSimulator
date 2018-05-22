@@ -48,10 +48,19 @@ public class ServiceAgent
                 }
             } else {
                 if (System.currentTimeMillis() > maxService) {
-                    log("Call "+call.getNumber() + " on hold");
-                    int a = (call.getDuration()) - 7;
-                    CallQueue.enQueueCall(call.getNumber(), a);
-                    status = ServiceAgentStatus.FREE;
+                    if (call.getDuration() == 0) {
+                        log("Call End");
+                        status = ServiceAgentStatus.FREE;
+                    } else if (call.getDuration() > 7) {
+                        log("Call " + call.getNumber() + " on hold");
+                        int a = (call.getDuration()) - 7;
+                        CallQueue.enQueueCall(call.getNumber(), a);
+                        status = ServiceAgentStatus.FREE;
+                    } else {
+                        log("Call " + call.getNumber() + " on hold");
+                        CallQueue.enQueueCall(call.getNumber(), call.getDuration());
+                        status = ServiceAgentStatus.FREE;
+                    }
                 } else if (System.currentTimeMillis() > callExpiration) {
                     log("Call End");
                     status = ServiceAgentStatus.FREE;
