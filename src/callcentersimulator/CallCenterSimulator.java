@@ -23,9 +23,9 @@ public class CallCenterSimulator {
         int minutes;
         
         try (Scanner reader = new Scanner(System.in)) {
-            System.out.print("Enter the number of service agent: ");
+            System.out.print("Please enter the number of service agent: ");
             serviceAgentQty = reader.nextInt();
-            System.out.print("Please enter the time for simulator run (In minutes): ");
+            System.out.print("Please enter simulation time(In minutes): ");
             minutes = reader.nextInt();
         }
 

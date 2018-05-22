@@ -33,7 +33,7 @@ public class CallGenerator
 
     @Override
     public void run() {
-        long ex = System.currentTimeMillis() + (execDuration * 30 * 1000);
+        long ex = System.currentTimeMillis() + (execDuration * 60 * 1000);
         while (System.currentTimeMillis() < ex) {
             int duration = random.nextInt(16);
             if (duration > 2) {
@@ -59,8 +59,7 @@ public class CallGenerator
 
     private void sleep() {
         try {
-            int sleep = random.nextInt(2 * 60);
-            Thread.sleep(sleep * 50);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

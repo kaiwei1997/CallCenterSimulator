@@ -48,9 +48,8 @@ public class CallQueue {
     public static void PrintCallQ(){
         System.out.println("Call In Queue");
         System.out.println("-------------");
-        System.out.println("Call ID    Duration");
-        System.out.println("-------    --------");
-        queue.forEach(f -> System.out.println(f.getNumber() + "          "+f.getDuration()));
+        System.out.println("Call ID(Duration)");
+        queue.forEach(f -> System.out.println("ID: "+f.getNumber() + " ("+f.getDuration()+")"));
     }
     
 
