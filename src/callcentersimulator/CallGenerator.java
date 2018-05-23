@@ -42,7 +42,7 @@ public class CallGenerator implements Runnable {
                 }
             } else {
                 stop();
-                System.out.println("Simulation End Time: " + formatter.format(Time.getEnd()));
+                System.out.println("Simulation End");
             }
         }
     }
