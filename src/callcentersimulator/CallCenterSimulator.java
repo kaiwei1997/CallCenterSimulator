@@ -5,6 +5,8 @@
  */
 package callcentersimulator;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
 /**
@@ -16,13 +18,17 @@ public class CallCenterSimulator {
     /**
      * @param args the command line arguments
      */
-    public static void main(String... args) {
+    public static void main(String... args) throws InterruptedException {
 
         int serviceAgentQty;
-        
+
         int minutes;
+
+        ServiceAgent sa = null;
+
+        CallGenerator cg;
         
-        ServiceAgent sa;
+        SimpleDateFormat formatter;
         
         try (Scanner reader = new Scanner(System.in)) {
             System.out.print("Please enter the number of service agent: ");
@@ -30,12 +36,22 @@ public class CallCenterSimulator {
             System.out.print("Please enter simulation time(In minutes): ");
             minutes = reader.nextInt();
         }
-
+        
+        Time.setStart(System.currentTimeMillis());
+        Time.setEnd(System.currentTimeMillis() + (minutes*60*1000));
+        
+        formatter = new SimpleDateFormat("HH:mm:ss");
+        
+        Timestamp ts = new Timestamp(Time.getStart());
+        
+        System.out.println("Simulation Start Time: " + formatter.format(ts));
+        
         for (int i = 1; i <= serviceAgentQty; i++) {
             sa = new ServiceAgent(i);
             sa.start();
         }
 
-        new CallGenerator(minutes).start();
+        cg = new CallGenerator();
+        cg.start();
     }
 }
