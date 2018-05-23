@@ -19,15 +19,19 @@ public class ServiceAgent
 
     private long maxService;
 
-    private SimpleDateFormat formatter;
+    private final SimpleDateFormat formatter;
 
-    private int id;
+    private final int id;
 
     private static boolean running;
 
     private ServiceAgentStatus status;
 
     private Call call;
+
+    private CallGenerator cg;
+
+    private Time time;
 
     public ServiceAgent(int id) {
         this.id = id;
@@ -37,32 +41,38 @@ public class ServiceAgent
 
     @Override
     public void run() {
+        long end = Time.getEnd();
         while (running) {
-            if (status == ServiceAgentStatus.FREE) {
-                call = CallQueue.retrieveCall();
-                if (call != null) {
-                    log("Answering call " + call.getNumber());
-                    callExpiration = System.currentTimeMillis() + (call.getDuration() * 1000);
-                    maxService = System.currentTimeMillis() + (7000);
-                    status = ServiceAgentStatus.IN_A_CALL;
-                }
-            } else {
-                if (System.currentTimeMillis() > maxService) {
-                    if (call.getDuration()-7 == 0) {
+            if (System.currentTimeMillis() < end) {
+                if (status == ServiceAgentStatus.FREE) {
+                    call = CallQueue.retrieveCall();
+                    if (call != null) {
+                        log("Answering call " + call.getNumber());
+                        callExpiration = System.currentTimeMillis() + (call.getDuration() * 1000);
+                        maxService = System.currentTimeMillis() + (7000);
+                        status = ServiceAgentStatus.IN_A_CALL;
+                    }
+                } else {
+                    if (System.currentTimeMillis() > maxService) {
+                        if (call.getDuration() - 7 == 0) {
+                            log("Call End");
+                            status = ServiceAgentStatus.FREE;
+                        } else if (call.getDuration() - 7 > 0) {
+                            log("Call " + call.getNumber() + " on hold");
+                            int a = (call.getDuration()) - 7;
+                            CallQueue.enQueueCall(call.getNumber(), a);
+                            status = ServiceAgentStatus.FREE;
+                        }
+                    } else if (System.currentTimeMillis() > callExpiration) {
                         log("Call End");
                         status = ServiceAgentStatus.FREE;
-                    } else if (call.getDuration()-7 > 0) {
-                        log("Call " + call.getNumber() + " on hold");
-                        int a = (call.getDuration()) - 7;
-                        CallQueue.enQueueCall(call.getNumber(), a);
-                        status = ServiceAgentStatus.FREE;
-                    } 
-                } else if (System.currentTimeMillis() > callExpiration) {
-                    log("Call End");
-                    status = ServiceAgentStatus.FREE;
+                    }
                 }
+                sleep();
+            } else {
+                stop();
             }
-            sleep();
+
         }
     }
 
@@ -73,7 +83,6 @@ public class ServiceAgent
 
     public void stop() {
         running = false;
-        log("All service agent stop");
     }
 
     private void log(String s) {
