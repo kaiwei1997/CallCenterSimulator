@@ -21,32 +21,30 @@ public class CallGenerator implements Runnable {
 
     private final Random random;
 
-    private final long execDuration;
-
-    private final long ex;
-
-    private ServiceAgent sa;
-
     private boolean running = true;
 
-    public CallGenerator(long duration) {
+    public CallGenerator() {
         random = new Random();
         formatter = new SimpleDateFormat("HH:mm:ss");
-        execDuration = duration;
-        ex = System.currentTimeMillis() + (execDuration * 30 * 1000);
+
     }
 
     @Override
     public void run() {
-        while (System.currentTimeMillis() < ex) {
+        long end = Time.getEnd();
+        while (running) {
+            if (System.currentTimeMillis() < end) {
                 int duration = random.nextInt(16);
                 if (duration > 2) {
                     log("Creating a call with a duration of " + duration + " seconds");
                     CallQueue.queueCall(duration);
                     sleep();
                 }
+            } else {
+                stop();
+                System.out.println("Simulation End Time: " + formatter.format(Time.getEnd()));
+            }
         }
-        stop();
     }
 
     public void start() {
@@ -67,9 +65,8 @@ public class CallGenerator implements Runnable {
         try {
             int sleep = random.nextInt(3) + 3;
             Thread.sleep(sleep * 1000);
-            log("Pause generate call " + sleep + " second(s)");
+            log("Pause generate call for " + sleep + " second(s)");
         } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
 }
