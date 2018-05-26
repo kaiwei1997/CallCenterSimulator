@@ -64,7 +64,9 @@ public class ServiceAgent
                             status = ServiceAgentStatus.FREE;
                         }
                     } else if (System.currentTimeMillis() > callExpiration) {
-                        log("Call End");
+                        int proceed = Statistic.getProceed();
+                        Statistic.setProceed(proceed + 1);
+                        log("Call End: Id " + call.getNumber());
                         status = ServiceAgentStatus.FREE;
                     }
                 }
