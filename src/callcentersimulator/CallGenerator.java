@@ -43,6 +43,7 @@ public class CallGenerator implements Runnable {
             } else {
                 stop();
                 System.out.println("Simulation End");
+                printStatistic();
             }
         }
     }
@@ -55,6 +56,10 @@ public class CallGenerator implements Runnable {
     public void stop() {
         running = false;
         log("Stop creating call");
+    }
+
+    private void printStatistic() {
+        System.out.println(Statistic.getProceed());
     }
 
     public void log(String s) {
