@@ -71,7 +71,7 @@ public class ServiceAgent
                     }
                 }
                 sleep();
-            } else {
+            } else{
                 stop();
             }
 
