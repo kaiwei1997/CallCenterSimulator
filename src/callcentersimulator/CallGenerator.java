@@ -8,8 +8,6 @@ package callcentersimulator;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  *
@@ -22,6 +20,7 @@ public class CallGenerator implements Runnable {
     private final Random random;
 
     private boolean running = true;
+    
 
     public CallGenerator() {
         random = new Random();
@@ -40,7 +39,7 @@ public class CallGenerator implements Runnable {
                     CallQueue.queueCall(duration);
                     sleep();
                 }
-            } else {
+            } else{
                 stop();
                 System.out.println("Simulation End");
                 printStatistic();
@@ -59,7 +58,10 @@ public class CallGenerator implements Runnable {
     }
 
     private void printStatistic() {
-        System.out.println(Statistic.getProceed());
+        long runningTime = Time.getEnd() - Time.getStart();
+        System.out.println("Total Running Time: " + runningTime);
+        System.out.println("The total number of calls processed: " + Statistic.getProceed());
+        System.out.println("");
     }
 
     public void log(String s) {
