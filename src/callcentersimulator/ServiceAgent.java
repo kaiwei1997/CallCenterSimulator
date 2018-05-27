@@ -43,6 +43,7 @@ public class ServiceAgent
     public void run() {
         long end = Time.getEnd();
         while (running) {
+            int proceed = Statistic.getProceed();
             if (System.currentTimeMillis() < end) {
                 if (status == ServiceAgentStatus.FREE) {
                     call = CallQueue.retrieveCall();
@@ -55,7 +56,8 @@ public class ServiceAgent
                 } else {
                     if (System.currentTimeMillis() > maxService) {
                         if (call.getDuration() - 7 == 0) {
-                            log("Call End");
+                            Statistic.setProceed(proceed + 1);
+                            log("Call End: Id " + call.getNumber());
                             status = ServiceAgentStatus.FREE;
                         } else if (call.getDuration() - 7 > 0) {
                             log("Call " + call.getNumber() + " on hold");
@@ -64,14 +66,13 @@ public class ServiceAgent
                             status = ServiceAgentStatus.FREE;
                         }
                     } else if (System.currentTimeMillis() > callExpiration) {
-                        int proceed = Statistic.getProceed();
                         Statistic.setProceed(proceed + 1);
                         log("Call End: Id " + call.getNumber());
                         status = ServiceAgentStatus.FREE;
                     }
                 }
                 sleep();
-            } else{
+            } else {
                 stop();
             }
 
