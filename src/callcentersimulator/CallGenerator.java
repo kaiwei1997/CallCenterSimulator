@@ -58,10 +58,12 @@ public class CallGenerator implements Runnable {
     }
 
     private void printStatistic() {
-        long runningTime = Time.getEnd() - Time.getStart();
-        System.out.println("Total Running Time: " + runningTime);
-        System.out.println("The total number of calls processed: " + Statistic.getProceed());
-        System.out.println("");
+        long runningTime = (Time.getEnd() - Time.getStart())/1000/60;
+        int proceed = Statistic.getProceed();
+        double avgNumCalls = proceed/runningTime;
+        System.out.println("Total Running Time: " + (runningTime) + "second(s)");
+        System.out.println("The total number of calls processed: " + proceed);
+        System.out.println("Average number of calls processed per minute: " + avgNumCalls);
     }
 
     public void log(String s) {
