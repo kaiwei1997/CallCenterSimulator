@@ -17,6 +17,7 @@ public class CallCenterSimulator {
 
     /**
      * @param args the command line arguments
+     * @throws java.lang.InterruptedException
      */
     public static void main(String... args) throws InterruptedException {
 
@@ -38,7 +39,7 @@ public class CallCenterSimulator {
         }
         
         Time.setStart(System.currentTimeMillis());
-        Time.setEnd(Time.getStart() + (minutes*30*1000));
+        Time.setEnd(Time.getStart() + (minutes*60*1000));
         
         formatter = new SimpleDateFormat("HH:mm:ss");
         
