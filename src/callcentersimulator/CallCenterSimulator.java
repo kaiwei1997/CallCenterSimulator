@@ -38,7 +38,7 @@ public class CallCenterSimulator {
         }
         
         Time.setStart(System.currentTimeMillis());
-        Time.setEnd(System.currentTimeMillis() + (minutes*30*1000));
+        Time.setEnd(Time.getStart() + (minutes*30*1000));
         
         formatter = new SimpleDateFormat("HH:mm:ss");
         
