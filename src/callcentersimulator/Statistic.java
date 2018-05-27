@@ -11,7 +11,6 @@ package callcentersimulator;
  */
 public class Statistic {
     public static int proceed;
-    public static double avgProceed;
     public static int avgArrivalRate;
     public static int firstAttempt;
     public static int secondAttempt;
@@ -23,14 +22,6 @@ public class Statistic {
 
     public static void setProceed(int proceed) {
         Statistic.proceed = proceed;
-    }
-
-    public static double getAvgProceed() {
-        return avgProceed;
-    }
-
-    public static void setAvgProceed(double avgProceed) {
-        Statistic.avgProceed = avgProceed;
     }
 
     public static int getAvgArrivalRate() {
