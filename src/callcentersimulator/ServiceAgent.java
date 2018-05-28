@@ -7,6 +7,8 @@ package callcentersimulator;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  *
@@ -33,59 +35,64 @@ public class ServiceAgent
 
     private Time time;
 
+    Timer timer;
+
     public ServiceAgent(int id) {
         this.id = id;
         this.status = ServiceAgentStatus.FREE;
         formatter = new SimpleDateFormat("HH:mm:ss");
+        timer = new Timer();  //At this line a new Thread will be created
+        timer.schedule(new stopService(), Time.getDuration()); //delay in milliseconds
     }
 
     @Override
     public void run() {
-        long end = Time.getEnd();
         while (running) {
             int proceed = Statistic.getProceed();
-            if (System.currentTimeMillis() < end) {
-                if (status == ServiceAgentStatus.FREE) {
-                    call = CallQueue.retrieveCall();
-                    if (call != null) {
-                        log("Answering call " + call.getNumber());
-                        callExpiration = System.currentTimeMillis() + (call.getDuration() * 1000);
-                        maxService = System.currentTimeMillis() + (7000);
-                        status = ServiceAgentStatus.IN_A_CALL;
-                    }
-                } else {
-                    if (System.currentTimeMillis() > maxService) {
-                        if (call.getDuration() - 7 == 0) {
-                            Statistic.setProceed(proceed + 1);
-                            log("Call End: Id " + call.getNumber());
-                            status = ServiceAgentStatus.FREE;
-                        } else if (call.getDuration() - 7 > 0) {
-                            log("Call " + call.getNumber() + " on hold");
-                            int a = (call.getDuration()) - 7;
-                            CallQueue.enQueueCall(call.getNumber(), a);
-                            status = ServiceAgentStatus.FREE;
-                        }
-                    } else if (System.currentTimeMillis() > callExpiration) {
+            if (status == ServiceAgentStatus.FREE) {
+                call = CallQueue.retrieveCall();
+                if (call != null) {
+                    log("Answering call " + call.getNumber());
+                    callExpiration = System.currentTimeMillis() + (call.getDuration() * 1000);
+                    maxService = System.currentTimeMillis() + (7000);
+                    status = ServiceAgentStatus.IN_A_CALL;
+                }
+            } else {
+                if (System.currentTimeMillis() > maxService) {
+                    if (call.getDuration() - 7 == 0) {
                         Statistic.setProceed(proceed + 1);
                         log("Call End: Id " + call.getNumber());
                         status = ServiceAgentStatus.FREE;
+                    } else if (call.getDuration() - 7 > 0) {
+                        log("Call " + call.getNumber() + " on hold");
+                        int a = (call.getDuration()) - 7;
+                        CallQueue.enQueueCall(call.getNumber(), a);
+                        status = ServiceAgentStatus.FREE;
                     }
+                } else if (System.currentTimeMillis() > callExpiration) {
+                    Statistic.setProceed(proceed + 1);
+                    log("Call End: Id " + call.getNumber());
+                    status = ServiceAgentStatus.FREE;
                 }
-                sleep();
-            } else {
-                stop();
             }
+            sleep();
         }
     }
 
     public void start() {
         running = true;
         new Thread(this).start();
-        
+
     }
 
-    public void stop() {
-        running = false;
+    class stopService extends TimerTask {
+
+        @Override
+        public void run() {
+            running = false;
+            timer.cancel();
+            log("Service Agent Stop");
+        }
     }
 
     private void log(String s) {

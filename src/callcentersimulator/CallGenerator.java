@@ -8,6 +8,8 @@ package callcentersimulator;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  *
@@ -20,30 +22,26 @@ public class CallGenerator implements Runnable {
     private final Random random;
 
     private boolean running = true;
-    
+
+    Timer timer;
 
     public CallGenerator() {
+
         random = new Random();
         formatter = new SimpleDateFormat("HH:mm:ss");
-
+        timer = new Timer();  //At this line a new Thread will be created
+        timer.schedule(new stopGenerate(), Time.getDuration()); //delay in milliseconds
     }
 
     @Override
     public void run() {
-        long end = Time.getEnd();
         while (running) {
-            if (System.currentTimeMillis() < end) {
-                int duration = random.nextInt(16);
-                int attempt = duration / 7;
-                if (duration > 2) {
-                    log("Creating a call with a duration of " + duration + " seconds");
-                    CallQueue.queueCall(duration);
-                    sleep();
-                }
-            } else{
-                stop();
-                System.out.println("Simulation End");
-                printStatistic();
+            int duration = random.nextInt(16);
+            int attempt = duration / 7;
+            if (duration > 2) {
+                log("Creating a call with a duration of " + duration + " seconds");
+                CallQueue.queueCall(duration);
+                sleep();
             }
         }
     }
@@ -53,17 +51,24 @@ public class CallGenerator implements Runnable {
         new Thread(this).start();
     }
 
-    public void stop() {
-        running = false;
-        log("Stop creating call");
+    class stopGenerate extends TimerTask {
+
+        @Override
+        public void run() {
+            running = false;
+            timer.cancel();
+            log("Stop creating call");
+            System.out.println("Simulation End");
+            printStatistic();
+        }
     }
 
     private void printStatistic() {
-        long runningTime = (Time.getEnd() - Time.getStart())/60/1000;
-        int dRunningTime = (int)runningTime;
+        long runningTime  = (System.currentTimeMillis()-Time.getStart())/60/1000;
+        long duration = Time.getDuration()/60/1000;
         int proceed = Statistic.getProceed();
-        double avgNumCalls = proceed/dRunningTime;
-        System.out.println("Total Running Time: " + (dRunningTime) + " minute(s)");
+        double avgNumCalls = proceed / duration;
+        System.out.println("Running Time:" + runningTime + " minute(s)");
         System.out.println("The total number of calls processed: " + proceed);
         System.out.println("Average number of calls processed per minute: " + avgNumCalls);
     }
@@ -74,9 +79,9 @@ public class CallGenerator implements Runnable {
 
     private void sleep() {
         try {
-            int sleep = random.nextInt(3) + 3;
-            Thread.sleep(sleep * 1000);
+            int sleep = random.nextInt(4) + 1;
             log("Pause generate call for " + sleep + " second(s)");
+            Thread.sleep(sleep * 1000);
         } catch (InterruptedException e) {
         }
     }
