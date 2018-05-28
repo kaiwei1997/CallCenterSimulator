@@ -34,6 +34,7 @@ public class CallGenerator implements Runnable {
         while (running) {
             if (System.currentTimeMillis() < end) {
                 int duration = random.nextInt(16);
+                int attempt = duration / 7;
                 if (duration > 2) {
                     log("Creating a call with a duration of " + duration + " seconds");
                     CallQueue.queueCall(duration);
@@ -62,7 +63,7 @@ public class CallGenerator implements Runnable {
         int dRunningTime = (int)runningTime;
         int proceed = Statistic.getProceed();
         double avgNumCalls = proceed/dRunningTime;
-        System.out.println("Total Running Time: " + (dRunningTime) + "minute(s)");
+        System.out.println("Total Running Time: " + (dRunningTime) + " minute(s)");
         System.out.println("The total number of calls processed: " + proceed);
         System.out.println("Average number of calls processed per minute: " + avgNumCalls);
     }

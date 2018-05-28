@@ -17,7 +17,7 @@ public class Call
     private final int duration;
     
     private final int number;
-    
+
     public Call(int number, int duration){
         this.number = number;
         this.duration = duration;

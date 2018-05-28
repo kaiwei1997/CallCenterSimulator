@@ -75,13 +75,13 @@ public class ServiceAgent
             } else {
                 stop();
             }
-
         }
     }
 
     public void start() {
         running = true;
         new Thread(this).start();
+        
     }
 
     public void stop() {
