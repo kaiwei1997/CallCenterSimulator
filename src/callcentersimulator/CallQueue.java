@@ -37,7 +37,7 @@ public class CallQueue {
     public static void enQueueCall(int id,int duration) {
         try {
             Call call = new Call(id, duration);
-            log("Queueing call " + call.getNumber() + " with a duration of " + call.getDuration() + " seconds");
+            log("Enqueueing call " + call.getNumber() + " with a duration of " + call.getDuration() + " seconds");
             getInstance().queue.put(call);
             PrintCallQ();
         } catch (InterruptedException e) {
