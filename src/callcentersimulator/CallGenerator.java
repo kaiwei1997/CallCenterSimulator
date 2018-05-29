@@ -35,6 +35,7 @@ public class CallGenerator implements Runnable {
 
     @Override
     public void run() {
+        sleep();
         while (running) {
             int duration = random.nextInt(16);
             int attempt = duration / 7;
@@ -79,7 +80,7 @@ public class CallGenerator implements Runnable {
 
     private void sleep() {
         try {
-            int sleep = random.nextInt(4) + 1;
+            int sleep = random.nextInt(4) + 2;
             log("Pause generate call for " + sleep + " second(s)");
             Thread.sleep(sleep * 1000);
         } catch (InterruptedException e) {
