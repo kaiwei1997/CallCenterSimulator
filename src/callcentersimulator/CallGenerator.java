@@ -88,6 +88,14 @@ public class CallGenerator implements Runnable {
         int totalInterarrival  = Statistic.getTotalInterarrival();
         double meanInterarrival = ((double)totalInterarrival)/(totalCallGenerate);
         double avgArrivalRate = ((int) Math.ceil(60/meanInterarrival));
+        /**To calculate average arrival rate:
+         * 1. Calculate mean of inter arrival rate
+         * inter arrival rate = the duration between two call
+         * Then use the total call generate / inter arrival rate to get mean of inter arrival rate
+         * 2. The average of arrival rate is the total of call generate per unit of time
+         * let we use the 60 second is the per unit of time
+         * so, 60/mean of inter arrival rate
+         */
         System.out.println("------------------------------------------------");
         System.out.println("Simulation End: " + formatter.format(System.currentTimeMillis()));
         System.out.println("------------------------------------------------\n");
