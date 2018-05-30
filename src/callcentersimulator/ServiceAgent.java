@@ -7,7 +7,6 @@ package callcentersimulator;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -35,7 +34,7 @@ public class ServiceAgent
     private CallGenerator cg;
 
     private Time time;
-
+    
     Timer timer;
 
     public ServiceAgent(int id) {
@@ -96,7 +95,7 @@ public class ServiceAgent
         new Thread(this).start();
 
     }
-
+    
     class stopService extends TimerTask {
 
         @Override

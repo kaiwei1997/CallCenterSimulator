@@ -47,7 +47,7 @@ public class CallCenterSimulator {
 
         System.out.println("Simulation Start Time: " + formatter.format(ts));
 
-        for (int i = 1; i <= serviceAgentQty; i++) {
+        for (int i = 0; i < serviceAgentQty; i++) {
             sa = new ServiceAgent(i);
             sa.start();
         }
