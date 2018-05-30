@@ -7,6 +7,7 @@ package callcentersimulator;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -31,21 +32,38 @@ public class CallCenterSimulator {
 
         SimpleDateFormat formatter;
 
-        try (Scanner reader = new Scanner(System.in)) {
-            System.out.print("Please enter the number of service agent: ");
+        Scanner reader = new Scanner(System.in);
+
+        do {
+            System.out.print("Please enter the positive number of service agent: ");
+            while (!reader.hasNextInt()) {
+                System.out.println("Please enter integer only");
+                System.out.print("Please enter the number of service agent: ");
+                reader.nextLine();
+            }
             serviceAgentQty = reader.nextInt();
-            System.out.print("Please enter simulation time(In minutes): ");
+
+        } while (serviceAgentQty < 0);
+
+        do {
+            System.out.print("Please enter simulation time(In minutes(positive)): ");
+            while (!reader.hasNextInt()) {
+                System.out.println("Please enter integer only");
+                System.out.print("Please enter simulation time(In minutes): ");
+                reader.nextLine();
+            }
             minutes = reader.nextInt();
-        }
+        } while (minutes < 0);
 
         Time.setStart(System.currentTimeMillis());
+
         Time.setDuration(minutes * 60 * 1000);
 
         formatter = new SimpleDateFormat("HH:mm:ss");
 
         Timestamp ts = new Timestamp(Time.getStart());
 
-        System.out.println("Simulation Start Time: " + formatter.format(ts));
+        System.out.println("\nSimulation Start Time: " + formatter.format(ts));
 
         for (int i = 0; i < serviceAgentQty; i++) {
             sa = new ServiceAgent(i);
