@@ -62,29 +62,11 @@ public class CallGenerator implements Runnable {
         public void run() {
             running = false;
             timer.cancel();
-            log("Stop creating call");
+            log("Stop creating call\n");
             printStatistic();
         }
     }
-
-    private void printStatistic() {
-        long runningTime  = (System.currentTimeMillis()-Time.getStart())/60/1000;
-        long duration = Time.getDuration()/60/1000;
-        int proceed = Statistic.getProceed();
-        double avgNumCalls = proceed / duration;
-        int totalCallGenerate = Statistic.getTotalCallGenerate();
-        int totalInterarrival  = Statistic.getTotalInterarrival();
-        double meanInterarrival = ((double)totalInterarrival)/(totalCallGenerate);
-        double avgArrivalRate = ((int) Math.ceil(60/meanInterarrival));
-        System.out.println("Simulation End: " + formatter.format(System.currentTimeMillis()));
-        System.out.println("Running time: " + runningTime + " minute(s)");
-        System.out.println("Total call generate: " + totalCallGenerate);
-        System.out.println("Total interarrival: " + totalInterarrival);
-        System.out.println("The total number of calls processed: " + proceed);
-        System.out.println("Average number of calls processed per minute: " + avgNumCalls);
-        System.out.println("Average arrival rate per minute: " + avgArrivalRate);
-    }
-
+    
     public void log(String s) {
         System.out.println("[" + formatter.format(new Date()) + "][CallGenerator]" + s);
     }
@@ -95,5 +77,28 @@ public class CallGenerator implements Runnable {
             Thread.sleep(interarrival * 1000);
         } catch (InterruptedException e) {
         }
+    }
+    
+    private void printStatistic() {
+        long runningTime  = (System.currentTimeMillis()-Time.getStart())/60/1000;
+        long duration = Time.getDuration()/60/1000;
+        int proceed = Statistic.getProceed();
+        double avgNumCalls = proceed / duration;
+        int totalCallGenerate = Statistic.getTotalCallGenerate();
+        int totalInterarrival  = Statistic.getTotalInterarrival();
+        double meanInterarrival = ((double)totalInterarrival)/(totalCallGenerate);
+        double avgArrivalRate = ((int) Math.ceil(60/meanInterarrival));
+        System.out.println("------------------------------------------------");
+        System.out.println("Simulation End: " + formatter.format(System.currentTimeMillis()));
+        System.out.println("------------------------------------------------\n");
+        System.out.println("------------------------------------------------");
+        System.out.println("Simulation Summary");
+        System.out.println("------------------------------------------------");
+        System.out.println("Running time: " + runningTime + " minute(s)");
+        System.out.println("Total call generate: " + totalCallGenerate);
+        System.out.println("Total interarrival: " + totalInterarrival);
+        System.out.println("The total number of calls processed: " + proceed);
+        System.out.println("Average number of calls processed per minute: " + avgNumCalls);
+        System.out.println("Average arrival rate per minute: " + avgArrivalRate);
     }
 }
