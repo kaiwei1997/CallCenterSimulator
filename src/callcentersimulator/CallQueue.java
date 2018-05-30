@@ -25,7 +25,7 @@ public class CallQueue {
 
     public static void queueCall(int duration) {
         try {
-            Call call = new Call(getInstance().counter++, duration);
+            Call call = new Call(getInstance().counter++, duration,0);
             log("Queueing call " + call.getNumber() + " with a duration of " + call.getDuration() + " seconds");
             getInstance().queue.put(call);
             PrintCallQ();
@@ -34,9 +34,9 @@ public class CallQueue {
         }
     }
     
-    public static void enQueueCall(int id,int duration) {
+    public static void enQueueCall(int id,int duration,int attempt) {
         try {
-            Call call = new Call(id, duration);
+            Call call = new Call(id, duration,attempt);
             log("Enqueueing call " + call.getNumber() + " with a duration of " + call.getDuration() + " seconds");
             getInstance().queue.put(call);
             PrintCallQ();

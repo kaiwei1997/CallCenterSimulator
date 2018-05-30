@@ -108,5 +108,8 @@ public class CallGenerator implements Runnable {
         System.out.println("The total number of calls processed: " + proceed);
         System.out.println("Average number of calls processed per minute: " + avgNumCalls);
         System.out.println("Average arrival rate per minute: " + avgArrivalRate);
+        System.out.println(Statistic.getFirstAttempt());
+        System.out.println(Statistic.getSecondAttempt());
+        System.out.println(Statistic.getThirdAttempt());
     }
 }

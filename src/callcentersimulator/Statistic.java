@@ -39,7 +39,7 @@ public class Statistic {
     }
 
     public static void setFirstAttempt(int firstAttempt) {
-        Statistic.firstAttempt = firstAttempt + 1;
+        Statistic.firstAttempt = firstAttempt;
     }
 
     public static int getSecondAttempt() {
@@ -47,7 +47,7 @@ public class Statistic {
     }
 
     public static void setSecondAttempt(int secondAttempt) {
-        Statistic.secondAttempt = secondAttempt + 1;
+        Statistic.secondAttempt = secondAttempt;
     }
 
     public static int getThirdAttempt() {
@@ -55,7 +55,7 @@ public class Statistic {
     }
 
     public static void setThirdAttempt(int thirdAttempt) {
-        Statistic.thirdAttempt = thirdAttempt + 1;
+        Statistic.thirdAttempt = thirdAttempt;
     }
 
     public static int getTotalInterarrival() {
