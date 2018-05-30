@@ -74,7 +74,7 @@ public class CallGenerator implements Runnable {
         double avgNumCalls = proceed / duration;
         int totalCallGenerate = Statistic.getTotalCallGenerate();
         int totalInterarrival  = Statistic.getTotalInterarrival();
-        double meanInterarrival = ((double)totalInterarrival)/(totalCallGenerate-1);
+        double meanInterarrival = ((double)totalInterarrival)/(totalCallGenerate);
         double avgArrivalRate = ((int) Math.ceil(60/meanInterarrival));
         System.out.println("Simulation End: " + formatter.format(System.currentTimeMillis()));
         System.out.println("Total Call Generate: " + totalCallGenerate);
