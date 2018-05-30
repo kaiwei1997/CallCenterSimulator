@@ -15,6 +15,8 @@ public class Statistic {
     public static int firstAttempt;
     public static int secondAttempt;
     public static int thirdAttempt;
+    public static int totalInterarrival;
+    public static int totalCallGenerate;
 
     public static int getProceed() {
         return proceed;
@@ -56,9 +58,21 @@ public class Statistic {
         Statistic.thirdAttempt = thirdAttempt + 1;
     }
 
+    public static int getTotalInterarrival() {
+        return totalInterarrival;
+    }
+
+    public static void setTotalInterarrival(int totalInterarrival) {
+        Statistic.totalInterarrival = totalInterarrival;
+    }
+
+    public static int getTotalCallGenerate() {
+        return totalCallGenerate;
+    }
+
+    public static void setTotalCallGenerate(int totalCallGenerate) {
+        Statistic.totalCallGenerate = totalCallGenerate;
+    }
     
-    
-    
-   
     
 }

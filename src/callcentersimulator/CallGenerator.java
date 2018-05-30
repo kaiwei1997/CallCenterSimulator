@@ -35,14 +35,18 @@ public class CallGenerator implements Runnable {
 
     @Override
     public void run() {
-        sleep();
+        sleep(random.nextInt(4)+2);
         while (running) {
             int duration = random.nextInt(16);
-            int attempt = duration / 7;
+            int totalGenerate = Statistic.getTotalCallGenerate();
+            int interarrival = Statistic.getTotalInterarrival();
+            int sleepTime = random.nextInt(4) + 2;
             if (duration > 2) {
                 log("Creating a call with a duration of " + duration + " seconds");
+                Statistic.setTotalCallGenerate(totalGenerate + 1);
                 CallQueue.queueCall(duration);
-                sleep();
+                sleep(sleepTime);
+                Statistic.setTotalInterarrival(interarrival+sleepTime);
             }
         }
     }
@@ -59,7 +63,6 @@ public class CallGenerator implements Runnable {
             running = false;
             timer.cancel();
             log("Stop creating call");
-            System.out.println("Simulation End");
             printStatistic();
         }
     }
@@ -69,20 +72,27 @@ public class CallGenerator implements Runnable {
         long duration = Time.getDuration()/60/1000;
         int proceed = Statistic.getProceed();
         double avgNumCalls = proceed / duration;
+        int totalCallGenerate = Statistic.getTotalCallGenerate();
+        int totalInterarrival  = Statistic.getTotalInterarrival();
+        double meanInterarrival = ((double)totalInterarrival)/(totalCallGenerate-1);
+        double avgArrivalRate = ((int) Math.ceil(60/meanInterarrival));
+        System.out.println("Simulation End: " + formatter.format(System.currentTimeMillis()));
+        System.out.println("Total Call Generate: " + totalCallGenerate);
+        System.out.println("Total Interarrival: " + totalInterarrival);
         System.out.println("Running Time:" + runningTime + " minute(s)");
         System.out.println("The total number of calls processed: " + proceed);
         System.out.println("Average number of calls processed per minute: " + avgNumCalls);
+        System.out.println("Average Arrival Rate per Minute: " + avgArrivalRate);
     }
 
     public void log(String s) {
         System.out.println("[" + formatter.format(new Date()) + "][CallGenerator]" + s);
     }
 
-    private void sleep() {
+    private void sleep(int interarrival) {
         try {
-            int sleep = random.nextInt(4) + 2;
-            log("Pause generate call for " + sleep + " second(s)");
-            Thread.sleep(sleep * 1000);
+            log("Pause generate call for " + interarrival + " second(s)");
+            Thread.sleep(interarrival * 1000);
         } catch (InterruptedException e) {
         }
     }
