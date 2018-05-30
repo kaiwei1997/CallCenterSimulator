@@ -77,12 +77,12 @@ public class CallGenerator implements Runnable {
         double meanInterarrival = ((double)totalInterarrival)/(totalCallGenerate);
         double avgArrivalRate = ((int) Math.ceil(60/meanInterarrival));
         System.out.println("Simulation End: " + formatter.format(System.currentTimeMillis()));
-        System.out.println("Total Call Generate: " + totalCallGenerate);
-        System.out.println("Total Interarrival: " + totalInterarrival);
-        System.out.println("Running Time:" + runningTime + " minute(s)");
+        System.out.println("Running time: " + runningTime + " minute(s)");
+        System.out.println("Total call generate: " + totalCallGenerate);
+        System.out.println("Total interarrival: " + totalInterarrival);
         System.out.println("The total number of calls processed: " + proceed);
         System.out.println("Average number of calls processed per minute: " + avgNumCalls);
-        System.out.println("Average Arrival Rate per Minute: " + avgArrivalRate);
+        System.out.println("Average arrival rate per minute: " + avgArrivalRate);
     }
 
     public void log(String s) {
