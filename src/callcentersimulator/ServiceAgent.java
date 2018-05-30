@@ -61,13 +61,13 @@ public class ServiceAgent
                     status = ServiceAgentStatus.IN_A_CALL;
                 }
             } else {
-                if (System.currentTimeMillis() > maxService && System.currentTimeMillis() < callExpiration) {
+                if (System.currentTimeMillis() >= maxService && System.currentTimeMillis() < callExpiration) {
                         log("Call " + call.getNumber() + " on hold");
                         int durationLeft = (call.getDuration()) - 7;
                         int attempt = call.getAttempt();
                         CallQueue.enQueueCall(call.getNumber(), durationLeft,attempt+1);
                         status = ServiceAgentStatus.FREE;
-                } else if (System.currentTimeMillis() > callExpiration) {
+                } else if (System.currentTimeMillis() >= callExpiration) {
                     Statistic.setProceed(proceed + 1);
                     switch (call.getAttempt()) {
                         case 0:
@@ -82,7 +82,6 @@ public class ServiceAgent
                         default:
                             break;
                     }
-                    
                     log("Call End: Id " + call.getNumber());
                     status = ServiceAgentStatus.FREE;
                 }
