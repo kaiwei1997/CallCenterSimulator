@@ -64,6 +64,4 @@ public class Statistic {
     public static void setTotalCallGenerate(int totalCallGenerate) {
         Statistic.totalCallGenerate = totalCallGenerate;
     }
-    
-    
 }

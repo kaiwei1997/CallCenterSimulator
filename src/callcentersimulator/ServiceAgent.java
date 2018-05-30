@@ -82,6 +82,7 @@ public class ServiceAgent
                         default:
                             break;
                     }
+                    
                     log("Call End: Id " + call.getNumber());
                     status = ServiceAgentStatus.FREE;
                 }
@@ -114,7 +115,6 @@ public class ServiceAgent
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
 }
