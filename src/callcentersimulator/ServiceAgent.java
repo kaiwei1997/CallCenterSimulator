@@ -32,15 +32,12 @@ public class ServiceAgent
     private ServiceAgentStatus status;
 
     private Call call;
-
-    static int count = 0;
-
+    
     private final Timer timer;
     
     ProceedCallByEachSA proceedCall;
 
     public ServiceAgent(int id) {
-        count++;
         this.id = id;
         this.status = ServiceAgentStatus.FREE;
         this.proceedTotal = 0;
@@ -110,11 +107,7 @@ public class ServiceAgent
     }
     
     private void print(){
-        System.out.println("Total number of calls processed by each service agent");
-        System.out.println("-----------------------------------------------------");
-        System.out.println("Service agent ID\tCall proceed");
-        System.out.println("----------------\t------------");
-        System.out.println(proceedCall.getId() + "\t" + proceedCall.getProceedCallTotal());
+        System.out.println("Service Agent " + proceedCall.getId() + " proceed " + proceedCall.getProceedCallTotal() + " call(s)");
     }
 
     private void log(String s) {
