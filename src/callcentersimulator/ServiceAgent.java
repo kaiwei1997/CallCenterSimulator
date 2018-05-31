@@ -25,24 +25,26 @@ public class ServiceAgent
 
     private final int id;
 
+    private int proceedTotal;
+
     private static boolean running;
 
     private ServiceAgentStatus status;
 
     private Call call;
 
-    private CallGenerator cg;
+    static int count = 0;
 
-    private Time time;
-    
-    Timer timer;
+    Timer t1;
 
     public ServiceAgent(int id) {
+        count++;
         this.id = id;
         this.status = ServiceAgentStatus.FREE;
+        this.proceedTotal = 0;
         formatter = new SimpleDateFormat("HH:mm:ss");
-        timer = new Timer();  //At this line a new Thread will be created
-        timer.schedule(new stopService(), Time.getDuration()); //delay in milliseconds
+        t1 = new Timer();  //At this line a new Thread will be created
+        t1.schedule(new stopService(), Time.getDuration()); //delay in milliseconds
     }
 
     @Override
@@ -58,11 +60,11 @@ public class ServiceAgent
                 }
             } else {
                 if (System.currentTimeMillis() >= maxService && System.currentTimeMillis() < callExpiration) {
-                        log("Call " + call.getNumber() + " on hold");
-                        int durationLeft = (call.getDuration()) - 7;
-                        int attempt = call.getAttempt();
-                        CallQueue.enQueueCall(call.getNumber(), durationLeft,attempt+1);
-                        status = ServiceAgentStatus.FREE;
+                    log("Call " + call.getNumber() + " on hold");
+                    int durationLeft = (call.getDuration()) - 7;
+                    int attempt = call.getAttempt();
+                    CallQueue.enQueueCall(call.getNumber(), durationLeft, attempt + 1);
+                    status = ServiceAgentStatus.FREE;
                 } else if (System.currentTimeMillis() >= callExpiration) {
                     Statistic.setProceed();
                     switch (call.getAttempt()) {
@@ -80,10 +82,12 @@ public class ServiceAgent
                     }
                     log("Call End: Id " + call.getNumber());
                     status = ServiceAgentStatus.FREE;
+                    proceedTotal += 1;
                 }
             }
             sleep();
         }
+        printCallProceedByEachSA();
     }
 
     public void start() {
@@ -91,19 +95,27 @@ public class ServiceAgent
         new Thread(this).start();
 
     }
-    
+
     class stopService extends TimerTask {
 
         @Override
         public void run() {
             running = false;
-            timer.cancel();
+            t1.cancel();
             log("Service Agent Stop");
         }
     }
 
     private void log(String s) {
         System.out.println("[" + formatter.format(new Date()) + "][ServiceAgent][Agent" + id + "]" + s);
+    }
+
+    private void printCallProceedByEachSA() {
+        System.out.println("Service Agent " + id + " proceed " + proceedTotal + " call(s)");
+        for (int i = 0; i < count; i++) {
+            System.out.println("Service Agent (i)" + i + " proceed " + proceedTotal + " call(s)");
+        }
+
     }
 
     private void sleep() {

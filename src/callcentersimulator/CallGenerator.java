@@ -49,6 +49,7 @@ public class CallGenerator implements Runnable {
                 Statistic.setTotalInterarrival(interarrival+sleepTime);
             }
         }
+        printStatistic();
     }
 
     public void start() {
@@ -63,7 +64,6 @@ public class CallGenerator implements Runnable {
             running = false;
             timer.cancel();
             log("Stop creating call\n");
-            printStatistic();
         }
     }
     
