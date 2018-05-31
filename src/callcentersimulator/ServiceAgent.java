@@ -35,7 +35,9 @@ public class ServiceAgent
 
     static int count = 0;
 
-    Timer t1;
+    private final Timer timer;
+    
+    ProceedCallByEachSA proceedCall;
 
     public ServiceAgent(int id) {
         count++;
@@ -43,8 +45,8 @@ public class ServiceAgent
         this.status = ServiceAgentStatus.FREE;
         this.proceedTotal = 0;
         formatter = new SimpleDateFormat("HH:mm:ss");
-        t1 = new Timer();  //At this line a new Thread will be created
-        t1.schedule(new stopService(), Time.getDuration()); //delay in milliseconds
+        timer = new Timer();  //At this line a new Thread will be created
+        timer.schedule(new stopService(), Time.getDuration()); //delay in milliseconds
     }
 
     @Override
@@ -66,7 +68,6 @@ public class ServiceAgent
                     CallQueue.enQueueCall(call.getNumber(), durationLeft, attempt + 1);
                     status = ServiceAgentStatus.FREE;
                 } else if (System.currentTimeMillis() >= callExpiration) {
-                    Statistic.setProceed();
                     switch (call.getAttempt()) {
                         case 0:
                             Statistic.setFirstAttempt();
@@ -80,6 +81,7 @@ public class ServiceAgent
                         default:
                             break;
                     }
+                    Statistic.setProceed();
                     log("Call End: Id " + call.getNumber());
                     status = ServiceAgentStatus.FREE;
                     proceedTotal += 1;
@@ -87,7 +89,7 @@ public class ServiceAgent
             }
             sleep();
         }
-        printCallProceedByEachSA();
+        print();
     }
 
     public void start() {
@@ -101,21 +103,22 @@ public class ServiceAgent
         @Override
         public void run() {
             running = false;
-            t1.cancel();
+            proceedCall = new ProceedCallByEachSA(id,proceedTotal);
             log("Service Agent Stop");
+            timer.cancel();
         }
+    }
+    
+    private void print(){
+        System.out.println("Total number of calls processed by each service agent");
+        System.out.println("-----------------------------------------------------");
+        System.out.println("Service agent ID\tCall proceed");
+        System.out.println("----------------\t------------");
+        System.out.println(proceedCall.getId() + "\t" + proceedCall.getProceedCallTotal());
     }
 
     private void log(String s) {
         System.out.println("[" + formatter.format(new Date()) + "][ServiceAgent][Agent" + id + "]" + s);
-    }
-
-    private void printCallProceedByEachSA() {
-        System.out.println("Service Agent " + id + " proceed " + proceedTotal + " call(s)");
-        for (int i = 0; i < count; i++) {
-            System.out.println("Service Agent (i)" + i + " proceed " + proceedTotal + " call(s)");
-        }
-
     }
 
     private void sleep() {

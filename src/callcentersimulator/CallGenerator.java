@@ -23,7 +23,7 @@ public class CallGenerator implements Runnable {
 
     private boolean running = true;
 
-    Timer timer;
+    private final Timer timer;
 
     public CallGenerator() {
 
@@ -49,7 +49,6 @@ public class CallGenerator implements Runnable {
                 Statistic.setTotalInterarrival(interarrival+sleepTime);
             }
         }
-        printStatistic();
     }
 
     public void start() {
@@ -62,8 +61,9 @@ public class CallGenerator implements Runnable {
         @Override
         public void run() {
             running = false;
-            timer.cancel();
             log("Stop creating call\n");
+            timer.cancel();
+            printStatistic();
         }
     }
     
@@ -111,5 +111,6 @@ public class CallGenerator implements Runnable {
         System.out.println("The number of calls processed on the first attempt: " + Statistic.getFirstAttempt());
         System.out.println("The number of calls had to be requeued once: " + Statistic.getSecondAttempt());
         System.out.println("The number of calls had to be requeued twice: " + Statistic.getThirdAttempt());
+        System.out.println("--------------------------------------------------");
     }
 }

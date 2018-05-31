@@ -72,7 +72,5 @@ public class CallCenterSimulator {
 
         cg = new CallGenerator();
         cg.start();
-        
-        
     }
 }
