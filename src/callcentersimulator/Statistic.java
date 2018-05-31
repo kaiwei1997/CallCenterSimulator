@@ -21,32 +21,32 @@ public class Statistic {
         return proceed;
     }
 
-    public static void setProceed(int proceed) {
-        Statistic.proceed = proceed;
+    public static void setProceed() {
+        Statistic.proceed += 1;
     }
 
     public static int getFirstAttempt() {
         return firstAttempt;
     }
 
-    public static void setFirstAttempt(int firstAttempt) {
-        Statistic.firstAttempt = firstAttempt;
+    public static void setFirstAttempt() {
+        Statistic.firstAttempt += 1;
     }
 
     public static int getSecondAttempt() {
         return secondAttempt;
     }
 
-    public static void setSecondAttempt(int secondAttempt) {
-        Statistic.secondAttempt = secondAttempt;
+    public static void setSecondAttempt() {
+        Statistic.secondAttempt += 1;
     }
 
     public static int getThirdAttempt() {
         return thirdAttempt;
     }
 
-    public static void setThirdAttempt(int thirdAttempt) {
-        Statistic.thirdAttempt = thirdAttempt;
+    public static void setThirdAttempt() {
+        Statistic.thirdAttempt += 1;
     }
 
     public static int getTotalInterarrival() {

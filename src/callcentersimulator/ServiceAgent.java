@@ -48,10 +48,6 @@ public class ServiceAgent
     @Override
     public void run() {
         while (running) {
-            int proceed = Statistic.getProceed();
-            int first = Statistic.getFirstAttempt();
-            int second = Statistic.getSecondAttempt();
-            int third = Statistic.getThirdAttempt();
             if (status == ServiceAgentStatus.FREE) {
                 call = CallQueue.retrieveCall();
                 if (call != null) {
@@ -68,16 +64,16 @@ public class ServiceAgent
                         CallQueue.enQueueCall(call.getNumber(), durationLeft,attempt+1);
                         status = ServiceAgentStatus.FREE;
                 } else if (System.currentTimeMillis() >= callExpiration) {
-                    Statistic.setProceed(proceed + 1);
+                    Statistic.setProceed();
                     switch (call.getAttempt()) {
                         case 0:
-                            Statistic.setFirstAttempt(first + 1);
+                            Statistic.setFirstAttempt();
                             break;
                         case 1:
-                            Statistic.setSecondAttempt(second + 1);
+                            Statistic.setSecondAttempt();
                             break;
                         case 2:
-                            Statistic.setThirdAttempt(third + 1);
+                            Statistic.setThirdAttempt();
                             break;
                         default:
                             break;
