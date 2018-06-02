@@ -23,18 +23,18 @@ public class CallCenterSimulator {
     public static void main(String[] args) {
 
         int serviceAgentQty;
-
         int minutes;
 
         ServiceAgent sa = null;
-
         CallGenerator cg;
-
         SimpleDateFormat formatter;
-
+        
         Scanner reader = new Scanner(System.in);
 
         do {
+            System.out.println("------------------------------------------------------------------------");
+            System.out.println("                 >>> ATM QUEUE SIMULATION SYSTEM <<<                    ");
+            System.out.println("------------------------------------------------------------------------"); 
             System.out.print("Please enter the positive number of service agent: ");
             while (!reader.hasNextInt()) {
                 System.out.println("Please enter integer only");
@@ -56,14 +56,15 @@ public class CallCenterSimulator {
         } while (minutes < 0);
 
         Time.setStart(System.currentTimeMillis());
-
         Time.setDuration(minutes * 60 * 1000);
-
         formatter = new SimpleDateFormat("HH:mm:ss");
-
         Timestamp ts = new Timestamp(Time.getStart());
 
-        System.out.println("\nSimulation Start Time: " + formatter.format(ts));
+        System.out.println("");
+        System.out.println("------------------------------------------------------------------------");
+        System.out.println("                       >>> SIMULATION START <<<                         ");
+        System.out.println("------------------------------------------------------------------------");
+        System.out.println("Simulation Start Time: " + formatter.format(ts));
 
         for (int i = 1; i <= serviceAgentQty; i++) {
             sa = new ServiceAgent(i);
