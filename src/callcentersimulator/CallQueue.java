@@ -16,16 +16,15 @@ import java.util.Date;
 public class CallQueue {
 
     private static CallQueue instance;
-
     private int counter;
-
     private final SimpleDateFormat formatter;
-
     private static LinkedBlockingQueue<Call> queue;
 
-    public static void queueCall(int duration) {
-        try {
-            Call call = new Call(getInstance().counter++, duration,0);
+    public static void queueCall(int duration) 
+    {
+        try 
+        {
+             Call call = new Call(getInstance().counter++, duration,0);
             log("Queueing call " + call.getNumber() + " with a duration of " + call.getDuration() + " seconds");
             getInstance().queue.put(call);
             PrintCallQ();
@@ -46,11 +45,12 @@ public class CallQueue {
     }
     
     public static void PrintCallQ(){
-        System.out.println("\n Call In Queue");
-        System.out.println(" -------------");
-        System.out.println("ID\tDuration");
-        System.out.println("--\t--------");
-        queue.forEach(f -> System.out.println(f.getNumber() + "\t"+ f.getDuration()));
+        System.out.println("");
+        System.out.println("Call In Queue:");
+        System.out.println("**********************");
+        System.out.println("Call ID   |   Duration");
+        System.out.println("**********************");
+        queue.forEach(f -> System.out.println("  " + f.getNumber() + "          "+ "\t" + f.getDuration()));
         System.out.println("");
     }
     
