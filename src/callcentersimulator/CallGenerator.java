@@ -18,11 +18,8 @@ import java.util.TimerTask;
 public class CallGenerator implements Runnable {
 
     private final SimpleDateFormat formatter;
-
     private final Random random;
-
     private boolean running = true;
-
     private final Timer timer;
 
     public CallGenerator() {
@@ -96,12 +93,14 @@ public class CallGenerator implements Runnable {
          * let we use the 60 second is the per unit of time
          * so, 60/mean of inter arrival rate
          */
-        System.out.println("------------------------------------------------");
-        System.out.println("Simulation End: " + formatter.format(System.currentTimeMillis()));
-        System.out.println("------------------------------------------------\n");
-        System.out.println("------------------------------------------------");
-        System.out.println("Simulation Summary");
-        System.out.println("------------------------------------------------");
+        System.out.println("------------------------------------------------------------------------");
+        System.out.println("                        >>> SIMULATION END <<<                          ");
+        System.out.println("------------------------------------------------------------------------");
+        System.out.println(formatter.format(System.currentTimeMillis()));
+        System.out.println("");
+        System.out.println("------------------------------------------------------------------------");
+        System.out.println("                      >>> SIMULATION SUMMARY <<<                        ");
+        System.out.println("------------------------------------------------------------------------");
         System.out.println("Running time: " + runningTime + " minute(s)");
         System.out.println("Total call generate: " + totalCallGenerate);
         System.out.println("Total interarrival: " + totalInterarrival);
@@ -111,6 +110,6 @@ public class CallGenerator implements Runnable {
         System.out.println("The number of calls processed on the first attempt: " + Statistic.getFirstAttempt());
         System.out.println("The number of calls had to be requeued once: " + Statistic.getSecondAttempt());
         System.out.println("The number of calls had to be requeued twice: " + Statistic.getThirdAttempt());
-        System.out.println("--------------------------------------------------");
+        System.out.println("------------------------------------------------------------------------");
     }
 }
