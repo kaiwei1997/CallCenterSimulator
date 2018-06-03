@@ -76,11 +76,18 @@ public class CallGenerator implements Runnable {
         }
     }
     
-    private void printStatistic() {
+    static void printStatistic() {
+        final SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");;
         long runningTime  = (System.currentTimeMillis()-Time.getStart())/60/1000;
         long duration = Time.getDuration()/60/1000;
         int proceed = Statistic.getProceed();
-        double avgNumCalls = proceed / duration;
+        double avgNumCalls;
+        // Catch ArithmeticException if simulation time = 0
+        try {
+            avgNumCalls = proceed / duration;
+        } catch (ArithmeticException e) {
+            avgNumCalls = 0;
+        }
         int totalCallGenerate = Statistic.getTotalCallGenerate();
         int totalInterarrival  = Statistic.getTotalInterarrival();
         double meanInterarrival = ((double)totalInterarrival)/(totalCallGenerate);
@@ -96,7 +103,7 @@ public class CallGenerator implements Runnable {
         System.out.println("------------------------------------------------------------------------");
         System.out.println("                        >>> SIMULATION END <<<                          ");
         System.out.println("------------------------------------------------------------------------");
-        System.out.println(formatter.format(System.currentTimeMillis()));
+        System.out.println("Simulation End Time: " + formatter.format(System.currentTimeMillis()));
         System.out.println("");
         System.out.println("------------------------------------------------------------------------");
         System.out.println("                      >>> SIMULATION SUMMARY <<<                        ");

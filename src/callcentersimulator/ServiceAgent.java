@@ -33,7 +33,7 @@ public class ServiceAgent
 
     private Call call;
     
-    private final Timer timer;
+    final Timer timer;
     
     ProceedCallByEachSA proceedCall;
 
@@ -100,13 +100,13 @@ public class ServiceAgent
         @Override
         public void run() {
             running = false;
-            proceedCall = new ProceedCallByEachSA(id,proceedTotal);
             log("Service Agent Stop");
             timer.cancel();
         }
     }
     
-    private void print(){
+    public void print(){
+        proceedCall = new ProceedCallByEachSA(id,proceedTotal);
         System.out.println("Service Agent " + proceedCall.getId() + " proceed " + proceedCall.getProceedCallTotal() + " call(s)");
     }
 
