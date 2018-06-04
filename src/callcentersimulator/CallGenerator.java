@@ -78,11 +78,11 @@ public class CallGenerator implements Runnable {
         final SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");;
         long runningTime = (System.currentTimeMillis() - Time.getStart()) / 60 / 1000;
         long duration = Time.getDuration() / 60 / 1000;
-        int proceed = Statistic.getProceed();
+        int processed = Statistic.getprocessed();
         double avgNumCalls;
         // Catch ArithmeticException if simulation time = 0
         try {
-            avgNumCalls = proceed / duration;
+            avgNumCalls = processed / duration;
         } catch (ArithmeticException e) {
             avgNumCalls = 0;
         }
@@ -109,7 +109,7 @@ public class CallGenerator implements Runnable {
         System.out.println("Running time: " + runningTime + " minute(s)");
         System.out.println("Total call generate: " + totalCallGenerate);
         System.out.println("Total interarrival: " + totalInterarrival);
-        System.out.println("The total number of calls processed: " + proceed);
+        System.out.println("The total number of calls processed: " + processed);
         System.out.println("Average number of calls processed per minute: " + avgNumCalls);
         System.out.println("Average arrival rate per minute: " + avgArrivalRate);
         System.out.println("The number of calls processed on the first attempt: " + Statistic.getFirstAttempt());

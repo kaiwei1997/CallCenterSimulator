@@ -78,7 +78,7 @@ public class ServiceAgent
                         default:
                             break;
                     }
-                    Statistic.setProceed();
+                    Statistic.setprocessed();
                     log("Call End: Id " + call.getNumber());
                     status = ServiceAgentStatus.FREE;
                     proceedTotal += 1;

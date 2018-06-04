@@ -10,19 +10,19 @@ package callcentersimulator;
  * @author JoshTan
  */
 public class Statistic {
-    public static int proceed;
+    public static int processed;
     public static int firstAttempt;
     public static int secondAttempt;
     public static int thirdAttempt;
     public static int totalInterarrival;
     public static int totalCallGenerate;
 
-    public static int getProceed() {
-        return proceed;
+    public static int getprocessed() {
+        return processed;
     }
 
-    public static void setProceed() {
-        Statistic.proceed += 1;
+    public static void setprocessed() {
+        Statistic.processed += 1;
     }
 
     public static int getFirstAttempt() {
