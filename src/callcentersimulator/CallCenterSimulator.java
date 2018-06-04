@@ -36,7 +36,7 @@ public class CallCenterSimulator {
         System.out.println("----------------------------------------------------------------------------"); 
         
         System.out.print("Please enter number of service agents: ");      
-        while (serviceAgentQty <= 0) {
+        while (serviceAgentQty < 0) {
             try {
                 serviceAgentQty = Integer.parseInt(reader.nextLine());
             } catch (NumberFormatException e) {
@@ -44,14 +44,14 @@ public class CallCenterSimulator {
                 System.out.print("Please enter number of service agents: ");
                 continue;
             }        
-            if (serviceAgentQty <= 0){
-                System.out.println("Please enter a positive integer and integer more than 0!\n");
+            if (serviceAgentQty < 0){
+                System.out.println("Please enter a positive integer!\n");
                 System.out.print("Please enter number of service agents: ");
             }            
         }
         
         System.out.print("Please enter simulation time (in minutes): ");
-        while (minutes <= 0) {
+        while (minutes < 0) {
             try {
                 minutes = Integer.parseInt(reader.nextLine());
             } catch (NumberFormatException e) {
@@ -59,8 +59,8 @@ public class CallCenterSimulator {
                 System.out.print("Please enter simulation time (in minutes): ");
                 continue;
             }        
-            if (minutes <= 0){
-                System.out.println("Please enter a positive integer and integer more than 0!\n");
+            if (minutes < 0){
+                System.out.println("Please enter a positive integer!\n");
                 System.out.print("Please enter simulation time (in minutes): ");
             }            
         }
