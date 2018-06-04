@@ -61,7 +61,7 @@ public class Statistic {
         return totalCallGenerate;
     }
 
-    public static void setTotalCallGenerate(int totalCallGenerate) {
-        Statistic.totalCallGenerate = totalCallGenerate;
+    public static void setTotalCallGenerate() {
+        Statistic.totalCallGenerate += 1;
     }
 }

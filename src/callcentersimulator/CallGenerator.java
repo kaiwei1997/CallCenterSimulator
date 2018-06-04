@@ -32,19 +32,17 @@ public class CallGenerator implements Runnable {
 
     @Override
     public void run() {
-        sleep(random.nextInt(4)+2);
+        sleep(random.nextInt(4) + 2);
         while (running) {
-            int duration = random.nextInt(16);
-            int totalGenerate = Statistic.getTotalCallGenerate();
+            int duration = random.nextInt(14) + 3;
             int interarrival = Statistic.getTotalInterarrival();
             int sleepTime = random.nextInt(4) + 2;
-            if (duration > 2) {
-                log("Creating a call with a duration of " + duration + " seconds");
-                Statistic.setTotalCallGenerate(totalGenerate + 1);
-                CallQueue.queueCall(duration);
-                sleep(sleepTime);
-                Statistic.setTotalInterarrival(interarrival+sleepTime);
-            }
+            log("Creating a call with a duration of " + duration + " seconds");
+            Statistic.setTotalCallGenerate();
+            CallQueue.queueCall(duration);
+            sleep(sleepTime);
+            Statistic.setTotalInterarrival(interarrival + sleepTime);
+
         }
     }
 
@@ -63,7 +61,7 @@ public class CallGenerator implements Runnable {
             printStatistic();
         }
     }
-    
+
     public void log(String s) {
         System.out.println("[" + formatter.format(new Date()) + "][CallGenerator]" + s);
     }
@@ -75,11 +73,11 @@ public class CallGenerator implements Runnable {
         } catch (InterruptedException e) {
         }
     }
-    
+
     static void printStatistic() {
         final SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");;
-        long runningTime  = (System.currentTimeMillis()-Time.getStart())/60/1000;
-        long duration = Time.getDuration()/60/1000;
+        long runningTime = (System.currentTimeMillis() - Time.getStart()) / 60 / 1000;
+        long duration = Time.getDuration() / 60 / 1000;
         int proceed = Statistic.getProceed();
         double avgNumCalls;
         // Catch ArithmeticException if simulation time = 0
@@ -89,16 +87,16 @@ public class CallGenerator implements Runnable {
             avgNumCalls = 0;
         }
         int totalCallGenerate = Statistic.getTotalCallGenerate();
-        int totalInterarrival  = Statistic.getTotalInterarrival();
-        double meanInterarrival = ((double)totalInterarrival)/(totalCallGenerate);
-        double avgArrivalRate = ((int) Math.ceil(60/meanInterarrival));
-        /**To calculate average arrival rate:
-         * 1. Calculate mean of inter arrival rate
-         * inter arrival rate = the duration between two call
-         * Then use the total call generate / inter arrival rate to get mean of inter arrival rate
-         * 2. The average of arrival rate is the total of call generate per unit of time
-         * let we use the 60 second is the per unit of time
-         * so, 60/mean of inter arrival rate
+        int totalInterarrival = Statistic.getTotalInterarrival();
+        double meanInterarrival = ((double) totalInterarrival) / (totalCallGenerate);
+        double avgArrivalRate = ((int) Math.ceil(60 / meanInterarrival));
+        /**
+         * To calculate average arrival rate: 1. Calculate mean of inter arrival
+         * rate inter arrival rate = the duration between two call Then use the
+         * total call generate / inter arrival rate to get mean of inter arrival
+         * rate 2. The average of arrival rate is the total of call generate per
+         * unit of time let we use the 60 second is the per unit of time so,
+         * 60/mean of inter arrival rate
          */
         System.out.println("------------------------------------------------------------------------");
         System.out.println("                        >>> SIMULATION END <<<                          ");
