@@ -4,16 +4,11 @@
  * and open the template in the editor.
  */
 package callcentersimulator;
-
-import java.io.Serializable;
-
 /**
  *
  * @author JoshTan
  */
-public class Call
-        implements Serializable 
-{
+public class Call{
     private final int duration;
     
     private final int number;
