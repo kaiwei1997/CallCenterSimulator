@@ -52,7 +52,7 @@ public class ServiceAgent
             if (status == ServiceAgentStatus.FREE) {
                 call = CallQueue.retrieveCall();
                 if (call != null) {
-                    log("Answering call " + call.getNumber());
+                    log("Answering Call " + call.getNumber());
                     callExpiration = System.currentTimeMillis() + (call.getDuration() * 1000);
                     maxService = System.currentTimeMillis() + (7000);
                     status = ServiceAgentStatus.IN_A_CALL;
@@ -79,7 +79,7 @@ public class ServiceAgent
                             break;
                     }
                     Statistic.setprocessed();
-                    log("Call End: Id " + call.getNumber());
+                    log("Call Ended: Call " + call.getNumber());
                     status = ServiceAgentStatus.FREE;
                     proceedTotal += 1;
                 }
@@ -100,18 +100,18 @@ public class ServiceAgent
         @Override
         public void run() {
             running = false;
-            log("Service Agent Stop");
+            log("Service Agent Stopped");
             timer.cancel();
         }
     }
     
     public void print(){
         proceedCall = new ProceedCallByEachSA(id,proceedTotal);
-        System.out.println("Service Agent " + proceedCall.getId() + " proceed " + proceedCall.getProceedCallTotal() + " call(s)");
+        System.out.println("Service Agent " + proceedCall.getId() + " processed " + proceedCall.getProceedCallTotal() + " call(s)");
     }
 
     private void log(String s) {
-        System.out.println("[" + formatter.format(new Date()) + "][ServiceAgent][Agent" + id + "]" + s);
+        System.out.println("[" + formatter.format(new Date()) + "][ServiceAgent][Agent" + id + "] " + s);
     }
 
     private void sleep() {

@@ -25,7 +25,7 @@ public class CallQueue {
         try 
         {
              Call call = new Call(getInstance().counter++, duration,0);
-            log("Queueing call " + call.getNumber() + " with a duration of " + call.getDuration() + " seconds");
+            log("Queueing Call " + call.getNumber() + " with a duration of " + call.getDuration() + " seconds");
             getInstance().queue.put(call);
             PrintCallQ();
         } catch (InterruptedException e) {
@@ -36,7 +36,7 @@ public class CallQueue {
     public static void enQueueCall(int id,int duration,int attempt) {
         try {
             Call call = new Call(id, duration,attempt);
-            log("Enqueueing call " + call.getNumber() + " with a duration of " + call.getDuration() + " seconds");
+            log("Enqueueing Call " + call.getNumber() + " with a duration of " + call.getDuration() + " seconds");
             getInstance().queue.put(call);
             PrintCallQ();
         } catch (InterruptedException e) {
@@ -58,7 +58,7 @@ public class CallQueue {
     public static Call retrieveCall() {
         Call call = getInstance().queue.poll();
         if (call != null) {
-            log("Retrieving call " + call.getNumber());
+            log("Retrieving Call " + call.getNumber());
         }
         return call;
     }

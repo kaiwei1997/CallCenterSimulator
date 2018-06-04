@@ -56,19 +56,19 @@ public class CallGenerator implements Runnable {
         @Override
         public void run() {
             running = false;
-            log("Stop creating call\n");
+            log("Stop creating calls\n");
             timer.cancel();
             printStatistic();
         }
     }
 
     public void log(String s) {
-        System.out.println("[" + formatter.format(new Date()) + "][CallGenerator]" + s);
+        System.out.println("[" + formatter.format(new Date()) + "][CallGenerator] " + s);
     }
 
     private void sleep(int interarrival) {
         try {
-            log("Pause generate call for " + interarrival + " second(s)");
+            log("Pause call generating for " + interarrival + " second(s)");
             Thread.sleep(interarrival * 1000);
         } catch (InterruptedException e) {
         }
@@ -91,12 +91,13 @@ public class CallGenerator implements Runnable {
         double meanInterarrival = ((double) totalInterarrival) / (totalCallGenerate);
         double avgArrivalRate = ((int) Math.ceil(60 / meanInterarrival));
         /**
-         * To calculate average arrival rate: 1. Calculate mean of inter arrival
-         * rate inter arrival rate = the duration between two call Then use the
-         * total call generate / inter arrival rate to get mean of inter arrival
-         * rate 2. The average of arrival rate is the total of call generate per
-         * unit of time let we use the 60 second is the per unit of time so,
-         * 60/mean of inter arrival rate
+         * To calculate average arrival rate: 
+         *      1. Calculate mean of inter arrival:
+         *              inter arrival = the duration between two calls
+         *              mean inter arrival = total inter arrival / total calls generated
+         *      2. The average arrival rate is the total calls generated per unit of time 
+         *              let 60 second = one unit of time
+         *              so, average arrival rate = 60 / mean inter arrival
          */
         System.out.println("------------------------------------------------------------------------");
         System.out.println("                        >>> SIMULATION END <<<                          ");
@@ -107,14 +108,14 @@ public class CallGenerator implements Runnable {
         System.out.println("                      >>> SIMULATION SUMMARY <<<                        ");
         System.out.println("------------------------------------------------------------------------");
         System.out.println("Running time: " + runningTime + " minute(s)");
-        System.out.println("Total call generate: " + totalCallGenerate);
-        System.out.println("Total interarrival: " + totalInterarrival);
-        System.out.println("The total number of calls processed: " + processed);
+        System.out.println("Total calls generated: " + totalCallGenerate);
+        System.out.println("Total interarrival time : " + totalInterarrival + " second(s)");
+        System.out.println("Total calls processed: " + processed);
         System.out.println("Average number of calls processed per minute: " + avgNumCalls);
         System.out.println("Average arrival rate per minute: " + avgArrivalRate);
-        System.out.println("The number of calls processed on the first attempt: " + Statistic.getFirstAttempt());
-        System.out.println("The number of calls had to be requeued once: " + Statistic.getSecondAttempt());
-        System.out.println("The number of calls had to be requeued twice: " + Statistic.getThirdAttempt());
+        System.out.println("Number of calls processed on first attempt: " + Statistic.getFirstAttempt());
+        System.out.println("Number of calls requeued once: " + Statistic.getSecondAttempt());
+        System.out.println("Number of calls requeued twice: " + Statistic.getThirdAttempt());
         System.out.println("------------------------------------------------------------------------");
     }
 }
