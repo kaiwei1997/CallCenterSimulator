@@ -1,18 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package callcentersimulator;
 
 import java.text.SimpleDateFormat;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.Date;
 
-/**
- *
- * @author JoshTan
- */
 public class CallQueue {
 
     private static CallQueue instance;
