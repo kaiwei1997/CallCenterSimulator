@@ -5,10 +5,6 @@
  */
 package callcentersimulator;
 
-/**
- *
- * @author JoshTan
- */
 public class Statistic {
     public static int processed;
     public static int firstAttempt;
