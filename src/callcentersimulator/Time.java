@@ -5,10 +5,6 @@
  */
 package callcentersimulator;
 
-/**
- *
- * @author JoshTan
- */
 public class Time {
     public static long start;
     public static long duration;
