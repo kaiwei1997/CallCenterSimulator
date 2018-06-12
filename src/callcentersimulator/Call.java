@@ -4,10 +4,7 @@
  * and open the template in the editor.
  */
 package callcentersimulator;
-/**
- *
- * @author JoshTan
- */
+
 public class Call{
     private final int duration;
     
