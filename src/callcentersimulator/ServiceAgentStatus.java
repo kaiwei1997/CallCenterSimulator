@@ -5,10 +5,6 @@
  */
 package callcentersimulator;
 
-/**
- *
- * @author JoshTan
- */
 public enum ServiceAgentStatus {
     FREE, IN_A_CALL;
 }
