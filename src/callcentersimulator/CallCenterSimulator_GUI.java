@@ -11,10 +11,7 @@ import java.util.Calendar;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.util.GregorianCalendar;
-/**
- *
- * @author user
- */
+
 public class CallCenterSimulator_GUI extends javax.swing.JFrame {
 
     Calendar cal = new GregorianCalendar();
