@@ -9,10 +9,6 @@ import java.text.SimpleDateFormat;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.Date;
 
-/**
- *
- * @author JoshTan
- */
 public class CallQueue {
 
     private static CallQueue instance;
