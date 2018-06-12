@@ -11,10 +11,6 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-/**
- *
- * @author JoshTan
- */
 public class CallGenerator implements Runnable {
 
     private final SimpleDateFormat formatter;
