@@ -6,10 +6,6 @@ package callcentersimulator;
  * and open the template in the editor.
  */
 
-/**
- *
- * @author JoshTan
- */
 public class ProceedCallByEachSA {
     private final int id;
     private final int proceedCallTotal;
