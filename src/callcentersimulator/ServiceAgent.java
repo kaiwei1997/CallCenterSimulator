@@ -10,10 +10,6 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
-/**
- *
- * @author JoshTan
- */
 public class ServiceAgent
         implements Runnable {
 
