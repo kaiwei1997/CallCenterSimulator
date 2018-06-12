@@ -10,10 +10,6 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
-/**
- *
- * @author JoshTan
- */
 public class CallCenterSimulator {
 
     /**
@@ -71,9 +67,9 @@ public class CallCenterSimulator {
         Timestamp ts = new Timestamp(Time.getStart());
 
         System.out.println("");
-        System.out.println("------------------------------------------------------------------------");
-        System.out.println("                       >>> SIMULATION START <<<                         ");
-        System.out.println("------------------------------------------------------------------------");
+        System.out.println("----------------------------------------------------------------------------");
+        System.out.println("                         >>> SIMULATION START <<<                           ");
+        System.out.println("----------------------------------------------------------------------------");
         System.out.println("Simulation Start Time: " + formatter.format(ts));
 
         if (Time.getDuration()!=0){
