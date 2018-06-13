@@ -17,7 +17,7 @@ public class ServiceAgent
 
     private final int id;
 
-    private int proceedTotal;
+    private int processedTotal;
 
     private static boolean running;
 
@@ -27,12 +27,12 @@ public class ServiceAgent
     
     final Timer timer;
     
-    ProceedCallByEachSA proceedCall;
+    ProcessedCallByEachSA processedCall;
 
     public ServiceAgent(int id) {
         this.id = id;
         this.status = ServiceAgentStatus.FREE;
-        this.proceedTotal = 0;
+        this.processedTotal = 0;
         formatter = new SimpleDateFormat("HH:mm:ss");
         timer = new Timer();  //At this line a new Thread will be created
         timer.schedule(new stopService(), Time.getDuration()); //delay in milliseconds
@@ -73,7 +73,7 @@ public class ServiceAgent
                     Statistic.setprocessed();
                     log("Call Ended: Call " + call.getNumber());
                     status = ServiceAgentStatus.FREE;
-                    proceedTotal += 1;
+                    processedTotal += 1;
                 }
             }
             sleep();
@@ -98,8 +98,8 @@ public class ServiceAgent
     }
     
     public void print(){
-        proceedCall = new ProceedCallByEachSA(id,proceedTotal);
-        System.out.println("Service Agent " + proceedCall.getId() + " processed " + proceedCall.getProceedCallTotal() + " call(s)");
+        processedCall = new ProcessedCallByEachSA(id,processedTotal);
+        System.out.println("Service Agent " + processedCall.getId() + " processed " + processedCall.getProcessedCallTotal() + " call(s)");
     }
 
     private void log(String s) {
